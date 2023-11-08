@@ -20,7 +20,7 @@
 
     nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       modules = [
-        ./host/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
+        ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
 
         # list of extra modules for Nix-on-Droid system
         # { nix.registry.nixpkgs.flake = nixpkgs; }
