@@ -46,7 +46,7 @@
 
   # Configure home-manager
   home-manager = {
-    config = ./home.nix;
+    config = ../../../../home/nix-on-droid/aarch64/mondrian_1/home.nix;
     backupFileExtension = "hm-bak";
     useGlobalPkgs = true;
   };
