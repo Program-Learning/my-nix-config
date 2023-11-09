@@ -51,4 +51,5 @@
     backupFileExtension = "hm-bak";
     useGlobalPkgs = true;
   };
+  # user.shell = "${pkgs.fish}/bin/fish";
 }

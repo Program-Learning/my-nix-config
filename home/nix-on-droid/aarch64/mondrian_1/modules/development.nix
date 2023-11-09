@@ -5,6 +5,8 @@
   home.packages = with pkgs; [
     rsync
     ranger
+    proxychains
+    tmux
     (python311.withPackages (ps:
       with ps; [
         ipykernel jupyterlab 
@@ -28,4 +30,19 @@
         pyyaml
       ]))
   ];
+  programs = {
+	  zsh = {
+		  enable = true;
+	  };
+	  nushell = {
+		  enable = true;
+	  };
+	  bash = {
+		  enable = true;
+		  enableCompletion = true;
+	  };
+	  fish = {
+		  enable = true;
+	  };
+  };
 }
