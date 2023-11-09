@@ -2,13 +2,13 @@
 let
   sshdTmpDirectory = "${config.user.home}/sshd-tmp";
   sshdDirectory = "${config.user.home}/sshd";
-  pathToPubKey = "${config.user.home}/.ssh/id_ed25519.pub";
+  # pathToAuthorized_keys = "./authorized_keys";
   port = 10022;
 in
 {
   build.activation.sshd = ''
     $DRY_RUN_CMD mkdir $VERBOSE_ARG --parents "${config.user.home}/.ssh"
-    $DRY_RUN_CMD cat ${pathToPubKey} > "${config.user.home}/.ssh/authorized_keys"
+    $DRY_RUN_CMD cat ${config.build.installationDir}/${./authorized_keys} > "${config.user.home}/.ssh/authorized_keys"
 
     if [[ ! -d "${sshdDirectory}" ]]; then
       $DRY_RUN_CMD rm $VERBOSE_ARG --recursive --force "${sshdTmpDirectory}"
