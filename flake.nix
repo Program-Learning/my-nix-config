@@ -14,9 +14,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    nur-ryan4yin = {
+      url = "github:ryan4yin/nur-packages";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-on-droid }: {
+  outputs = inputs @ { self, nixpkgs, home-manager, nix-on-droid, nur-ryan4yin }: {
 
     nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       modules = [
@@ -31,7 +36,7 @@
       ];
 
       # list of extra special args for Nix-on-Droid modules
-      extraSpecialArgs = {
+      extraSpecialArgs = inputs // {
         # rootPath = ./.;
       };
 
