@@ -23,7 +23,7 @@
 
   outputs = inputs @ { self, nixpkgs, home-manager, nix-on-droid, nur-ryan4yin }: {
 
-    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnDroidConfigurations.mondrian_1 = nix-on-droid.lib.nixOnDroidConfiguration {
       modules = [
         ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
 
