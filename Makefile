@@ -13,6 +13,9 @@
 mondrian_1:
 	NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#mondrian_1
 
+nix-on-droid_x11:
+	nix-shell ~/my-nix-config/scripts/x11.nix --run "myx :1"
+
 update:
 	nix flake update
 
