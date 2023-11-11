@@ -49,3 +49,8 @@ nur_all := nur-program-learning nur-linyinfeng nur-xddxdd nur-AtaraxiaSjel nur-a
 update_nur:
 	$(foreach repo,$(nur_all)\
 		,nix flake lock --update-input $(repo) &&) true
+
+# nix-repl:
+# 	NIX_PATH=nixpkgs=http://nixos.org/channels/nixos-23.05/nixexprs.tar.xz:home-manager=https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz:nix-on-droid=https://github.com/t184256/nix-on-droid/archive/release-23.05.tar.gz nix repl
+# # for nix-on-droid:
+# # nix-repl> hm = import <home-manager/modules> { configuration = ~/my-nix-config/home/nix-on-droid/aarch64/mondrian_1/home.nix; pkgs = import <nixpkgs> {}; }
