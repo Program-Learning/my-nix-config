@@ -28,7 +28,7 @@
       system = "aarch64-linux";
     };
   in {
-    nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid aarch64-linux_base_args // {nix-on-droid_modules = [./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix];};
+    nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid (aarch64-linux_base_args // {nix-on-droid_modules = [./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix];});
   };
   nixConfig = {
     experimental-features = [ "nix-command" "flakes" ];
