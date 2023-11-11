@@ -21,21 +21,34 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nix-on-droid, nur-ryan4yin }: let
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    nix-on-droid,
+    nur-ryan4yin,
+  }: let
     make_nix-on-droid = import ./lib/nix-on-droid.nix;
     aarch64-linux_base_args = {
       inherit nix-on-droid nixpkgs home-manager;
       system = "aarch64-linux";
     };
   in {
-    nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid (aarch64-linux_base_args // {nix-on-droid_modules = [./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix];});
+    nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid (
+      aarch64-linux_base_args
+      // {
+        nix-on-droid_modules = [
+          ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
+        ];
+      }
+    );
   };
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = ["nix-command" "flakes"];
     substituters = [
       # replace official cache with a mirror located in China
       "https://mirrors.ustc.edu.cn/nix-channels/store"
-        "https://cache.nixos.org/"
+      "https://cache.nixos.org/"
     ];
 
     # nix community's cache server

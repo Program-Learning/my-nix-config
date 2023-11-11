@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     rsync
     ranger
@@ -9,8 +6,11 @@
     tmux
     (python311.withPackages (ps:
       with ps; [
-        ipykernel jupyterlab 
-        matplotlib numpy seaborn
+        ipykernel
+        jupyterlab
+        matplotlib
+        numpy
+        seaborn
         networkx
         beautifulsoup4
         selenium
@@ -31,18 +31,18 @@
       ]))
   ];
   programs = {
-	  zsh = {
-		  enable = true;
-	  };
-	  nushell = {
-		  enable = true;
-	  };
-	  bash = {
-		  enable = true;
-		  enableCompletion = true;
-	  };
-	  fish = {
-		  enable = true;
-	  };
+    zsh = {
+      enable = true;
+    };
+    nushell = {
+      enable = true;
+    };
+    bash = {
+      enable = true;
+      enableCompletion = true;
+    };
+    fish = {
+      enable = true;
+    };
   };
 }

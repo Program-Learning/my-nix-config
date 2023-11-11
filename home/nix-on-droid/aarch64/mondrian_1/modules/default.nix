@@ -1,5 +1,4 @@
-{config, ...} @ args:
-{
+{config, ...} @ args: {
   imports = [
     ./font.nix
     ./development.nix
