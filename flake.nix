@@ -21,39 +21,14 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nix-on-droid, nur-ryan4yin }: {
-
-    nixOnDroidConfigurations.mondrian_1 = nix-on-droid.lib.nixOnDroidConfiguration {
-      modules = [
-        ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
-
-        # list of extra modules for Nix-on-Droid system
-        # { nix.registry.nixpkgs.flake = nixpkgs; }
-        # ./path/to/module.nix
-
-        # or import source out-of-tree modules like:
-        # flake.nixOnDroidModules.module
-      ];
-
-      # list of extra special args for Nix-on-Droid modules
-      extraSpecialArgs = inputs // {
-        # rootPath = ./.;
-      };
-
-      # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
-      pkgs = import nixpkgs {
-        system = "aarch64-linux";
-
-        overlays = [
-          nix-on-droid.overlays.default
-          # add other overlays
-        ];
-      };
-
-      # set path to home-manager flake
-      home-manager-path = home-manager.outPath;
+  outputs = inputs @ { self, nixpkgs, home-manager, nix-on-droid, nur-ryan4yin }: let
+    make_nix-on-droid = import ./lib/nix-on-droid.nix;
+    aarch64-linux_base_args = {
+      inherit nix-on-droid nixpkgs home-manager;
+      system = "aarch64-linux";
     };
-
+  in {
+    nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid aarch64-linux_base_args // {nix-on-droid_modules = [./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix];};
   };
   nixConfig = {
     experimental-features = [ "nix-command" "flakes" ];
