@@ -29,6 +29,8 @@
     xz
     zip
     unzip
+    ncurses # command clear
+    which
   ];
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
