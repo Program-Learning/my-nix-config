@@ -43,6 +43,7 @@
       }
     );
   };
+
   nixConfig = {
     experimental-features = ["nix-command" "flakes"];
     substituters = [

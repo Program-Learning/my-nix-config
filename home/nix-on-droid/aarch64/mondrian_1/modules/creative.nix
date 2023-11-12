@@ -1,4 +1,7 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     # creative
     blender # 3d modeling
@@ -10,6 +13,7 @@
         gmic
       ];
     })
+    shotcut
     inkscape # vector graphics
     krita # digital painting
     musescore # music notation

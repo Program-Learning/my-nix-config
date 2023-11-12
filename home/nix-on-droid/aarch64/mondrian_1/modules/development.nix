@@ -1,4 +1,7 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  ...
+}: let
   my_python = pkgs.python311.withPackages (ps:
     with ps; [
       ipykernel
