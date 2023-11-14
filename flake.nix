@@ -34,6 +34,8 @@
     home-manager,
     nix-on-droid,
     nur-ryan4yin,
+    #catppuccin-urxvt,
+    ...
   }: let
     make_nix-on-droid = import ./lib/nix-on-droid.nix;
     aarch64-linux_base_args = {
