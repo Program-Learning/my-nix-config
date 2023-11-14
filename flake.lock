@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "catppuccin-urxvt": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1665544602,
+        "narHash": "sha256-YFlSGJzWWB57eSXiUY4l/mSBbOY0an+qej6//YLSiuE=",
+        "owner": "catppuccin",
+        "repo": "urxvt",
+        "rev": "ccd8eb763edd0a382b5e9bbfbd9697c4d4129edf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "urxvt",
+        "rev": "ccd8eb763edd0a382b5e9bbfbd9697c4d4129edf",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -187,6 +204,7 @@
     },
     "root": {
       "inputs": {
+        "catppuccin-urxvt": "catppuccin-urxvt",
         "home-manager": "home-manager",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs",

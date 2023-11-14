@@ -29,17 +29,34 @@
     ]);
 in {
   home.packages = with pkgs; [
+  
+        #-- python
     my_python
 
-    rsync
-    ranger
+        #-- golang
+    go
+    gomodifytags
+    iferr # generate error handling code for go
+    impl # generate function implementation for go
+    gotools # contains tools like: godoc, goimports, etc.
+    gopls # go language server
+    delve # go debugger
+
+        #-- jdk
+    jdk17 # used to run some java based tools(.jar)
+
+
+    rsync # File Copy/Snyc
+    ranger # Terminal FileManager
     proxychains
-    tmux
+    tmux # Background Shell process
 
     # User-facing stuff that you really really want to have
     vim # or some other editor, e.g. nano or neovim
-    helix
-    git
+    helix # An editor with lots of functions out of box
+    git # Version Manager
+    direnv
+
     neofetch
     openssh
     gnumake

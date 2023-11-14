@@ -2,6 +2,7 @@
   description = "Advanced example of Nix-on-Droid system config with home-manager.";
 
   inputs = {
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
 
     home-manager = {
@@ -19,6 +20,12 @@
       url = "github:ryan4yin/nur-packages";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    catppuccin-urxvt = {
+      url = "github:catppuccin/urxvt/ccd8eb763edd0a382b5e9bbfbd9697c4d4129edf";
+      flake = false;
+    };
+
   };
 
   outputs = inputs @ {
