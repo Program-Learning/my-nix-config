@@ -3,6 +3,7 @@
   home-manager,
   nix-on-droid,
   nix-on-droid_modules,
+  specialArgs,
   system,
   ...
 }:
