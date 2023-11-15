@@ -2,13 +2,9 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
-    dmenu
-    #rofi
-  ];
 
   programs = {
-    rofi = {
+    firefox = {
       enable = true;
     };
 
