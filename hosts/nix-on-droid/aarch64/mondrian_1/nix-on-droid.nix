@@ -45,5 +45,5 @@
   #time.timeZone = "Europe/Berlin";
 
   # user.shell = "${pkgs.fish}/bin/fish";
-  networking.hostName = "mondrian_1";
+  # networking.hostName = "mondrian_1";
 }
