@@ -5,7 +5,7 @@
   my_python = pkgs.python311.withPackages (ps:
     with ps; [
       ipykernel
-      jupyterlab
+      #jupyterlab
       matplotlib
       numpy
       seaborn
