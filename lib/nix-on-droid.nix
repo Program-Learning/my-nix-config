@@ -30,9 +30,11 @@ nix-on-droid.lib.nixOnDroidConfiguration {
     ];
 
   # list of extra special args for Nix-on-Droid modules
-  extraSpecialArgs = {
-    # rootPath = ./.;
-  };
+  extraSpecialArgs =
+    {
+      # rootPath = ./.;
+    }
+    // specialArgs;
 
   # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
   pkgs = import nixpkgs {

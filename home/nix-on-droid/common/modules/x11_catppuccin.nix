@@ -1,4 +1,8 @@
-{catppuccin-urxvt, pkgs, ...}:
+{
+  catppuccin-urxvt,
+  pkgs,
+  ...
+}:
 with pkgs; let
   id_c = writeText "id.c" ''
     #include <sys/types.h>
@@ -28,5 +32,8 @@ with pkgs; let
 in {
   home.packages = [
     myx
+    awesome
+    rxvt-unicode
+    tmux
   ];
 }

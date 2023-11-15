@@ -22,16 +22,15 @@
       system = "aarch64-linux";
       specialArgs = aarch64-nix-on-droid_specialArgs;
     };
+
+    mondrian_1_modules = {
+      nix-on-droid_modules = [
+        ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
+      ];
+      home-manager_module = import home/nix-on-droid/aarch64/mondrian_1/home.nix;
+    };
   in {
-    nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid (
-      aarch64-nix-on-droid_base_args
-      // {
-        nix-on-droid_modules = [
-          ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
-        ];
-        home-manager_module = import home/nix-on-droid/aarch64/mondrian_1/home.nix;
-      }
-    );
+    nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid (aarch64-nix-on-droid_base_args // mondrian_1_modules);
   };
 
   nixConfig = {
