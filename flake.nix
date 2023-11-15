@@ -10,6 +10,7 @@
     ...
   }: let
     make_nix-on-droid = import ./lib/nix-on-droid.nix;
+
     aarch64-nix-on-droid_specialArgs =
       {
         pkgs-unstable = import nixpkgs-unstable {
@@ -23,6 +24,7 @@
       specialArgs = aarch64-nix-on-droid_specialArgs;
     };
 
+    #-- Users' Configurations
     mondrian_1_modules = {
       nix-on-droid_modules = [
         ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
