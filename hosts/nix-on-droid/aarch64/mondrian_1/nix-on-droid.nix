@@ -44,12 +44,6 @@
   # Set your time zone
   #time.timeZone = "Europe/Berlin";
 
-  # Configure home-manager
-  home-manager = {
-    config = ../../../../home/nix-on-droid/aarch64/mondrian_1/home.nix;
-    backupFileExtension = "hm-bak";
-    useGlobalPkgs = true;
-  };
   # user.shell = "${pkgs.fish}/bin/fish";
   networking.hostName = "mondrian_1";
 }

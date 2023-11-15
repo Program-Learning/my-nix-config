@@ -10,15 +10,17 @@
     ...
   }: let
     make_nix-on-droid = import ./lib/nix-on-droid.nix;
-    aarch64-nix-on-droid_specialArgs = {
+    aarch64-nix-on-droid_specialArgs =
+      {
         pkgs-unstable = import nixpkgs-unstable {
-			config.allowUnfree = true;
-		};
-	} // inputs;
+          config.allowUnfree = true;
+        };
+      }
+      // inputs;
     aarch64-nix-on-droid_base_args = {
       inherit nix-on-droid nixpkgs home-manager;
       system = "aarch64-linux";
-	  specialArgs = aarch64-nix-on-droid_specialArgs;
+      specialArgs = aarch64-nix-on-droid_specialArgs;
     };
   in {
     nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid (
@@ -27,6 +29,7 @@
         nix-on-droid_modules = [
           ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
         ];
+        home-manager_module = import home/nix-on-droid/aarch64/mondrian_1/home.nix;
       }
     );
   };
@@ -49,7 +52,6 @@
   };
 
   inputs = {
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -74,7 +76,5 @@
       url = "github:catppuccin/urxvt/ccd8eb763edd0a382b5e9bbfbd9697c4d4129edf";
       flake = false;
     };
-
   };
-
 }

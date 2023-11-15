@@ -3,6 +3,7 @@
   home-manager,
   nix-on-droid,
   nix-on-droid_modules,
+  home-manager_module,
   specialArgs,
   system,
   ...
@@ -17,6 +18,15 @@ nix-on-droid.lib.nixOnDroidConfiguration {
 
       # or import source out-of-tree modules like:
       # flake.nixOnDroidModules.module
+      {
+        # Configure home-manager
+        home-manager = {
+          config = home-manager_module;
+          extraSpecialArgs = specialArgs;
+          backupFileExtension = "hm-bak";
+          useGlobalPkgs = true;
+        };
+      }
     ];
 
   # list of extra special args for Nix-on-Droid modules
