@@ -128,6 +128,9 @@
         #-- Optional Requirements:
         gdu # disk usage analyzer, required by AstroNvim
         ripgrep # fast search tool, required by AstroNvim's '<leader>fw'(<leader> is space key)
+
+        lazygit
+        curl
       ]
       ++ (
         if pkgs.stdenv.isDarwin

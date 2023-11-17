@@ -29,7 +29,7 @@
     ]);
 in {
   home.packages = with pkgs; [
-  
+    
         #-- python
     my_python
 
@@ -59,6 +59,7 @@ in {
 
     neofetch
     openssh
+    curl
     gnumake
 
     # Some common stuff that people expect to have
@@ -84,6 +85,7 @@ in {
     netcat # nc
     procps # command ps/pgrep and ...
     lsof
+    time
   ];
   programs = {
     zsh = {
