@@ -1,4 +1,8 @@
-{config, ...} @ args: {
+{
+  config,
+  pkgs,
+  ...
+} @ args: {
   imports = [
     ../../../common/modules/extra_keys.nix
     ../../../common/modules/font.nix
