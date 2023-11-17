@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "astronvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1691678898,
+        "narHash": "sha256-uydWNOkk1HnYvLHBRyCqFZMeXJue2fueXhvk0MXhOkw=",
+        "owner": "AstroNvim",
+        "repo": "AstroNvim",
+        "rev": "1910b86d3df873bea4f880f9299dbf66fe1e65fe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AstroNvim",
+        "ref": "v3.36.0",
+        "repo": "AstroNvim",
+        "type": "github"
+      }
+    },
     "catppuccin-urxvt": {
       "flake": false,
       "locked": {
@@ -220,6 +237,7 @@
     },
     "root": {
       "inputs": {
+        "astronvim": "astronvim",
         "catppuccin-urxvt": "catppuccin-urxvt",
         "home-manager": "home-manager",
         "nix-on-droid": "nix-on-droid",

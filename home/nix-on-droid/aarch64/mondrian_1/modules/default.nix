@@ -10,6 +10,7 @@
     ./menu.nix
     ./dewm.nix
     ./browers.nix
-    ../../../common/modules/x11_catppuccin.nix # broken but can use to avoid gc
+    ../../../common/modules/x11_catppuccin.nix
+    ../../../common/modules/neovim
   ];
 }

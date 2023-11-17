@@ -77,5 +77,11 @@
       url = "github:catppuccin/urxvt/ccd8eb763edd0a382b5e9bbfbd9697c4d4129edf";
       flake = false;
     };
+
+    # AstroNvim is an aesthetic and feature-rich neovim config.
+    astronvim = {
+      url = "github:AstroNvim/AstroNvim/v3.36.0";
+      flake = false;
+    };
   };
 }
