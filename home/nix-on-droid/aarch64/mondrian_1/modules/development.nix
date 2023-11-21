@@ -26,6 +26,9 @@
       requests
       pyquery
       pyyaml
+
+      
+      #docx2pdf
     ]);
 in {
   home.packages = with pkgs; [
