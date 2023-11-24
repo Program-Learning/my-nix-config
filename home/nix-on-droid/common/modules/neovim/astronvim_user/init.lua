@@ -180,7 +180,6 @@ return {
     },
     -- The plugin offers the abilibty to search and replace.
     {
-  nix.package = pkgs.nix;
       "nvim-pack/nvim-spectre",
       dependencies = {
         {"nvim-lua/plenary.nvim"},
