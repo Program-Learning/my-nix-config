@@ -14,6 +14,7 @@
       ];
     })
     shotcut
+    mdp
     inkscape # vector graphics
     krita # digital painting
     musescore # music notation

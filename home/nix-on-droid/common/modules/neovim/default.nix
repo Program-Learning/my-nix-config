@@ -27,118 +27,130 @@
   programs = {
     neovim = {
       enable = true;
+
       defaultEditor = true;
-
-      viAlias = false;
+      viAlias = true;
       vimAlias = true;
-
-      withPython3 = true;
-      withNodeJs = true;
-      extraPackages = with pkgs; [];
 
       # currently we use lazy.nvim as neovim's package manager, so comment this one.
       # plugins = with pkgs.vimPlugins; [
       #   # search all the plugins using https://search.nixos.org/packages
       # ];
-    };
-  };
-  home = {
-    packages = with pkgs;
-      [
-        #-- c/c++
-        cmake
-        cmake-language-server
-        gnumake
-        checkmake
-        gcc # c/c++ compiler, required by nvim-treesitter!
-        # clang-tools
-        # ccls
-        llvmPackages.clang-unwrapped # c/c++ tools with clang-tools such as clangd
-        gdb
-        lldb
 
-        #-- python
-        nodePackages.pyright # python language server
-        python311Packages.black # python formatter
-        python311Packages.ruff-lsp
+      # Extra packages only available to nvim(won't pollute the global home environment)
+      extraPackages = with pkgs;
+        [
+          #-- c/c++
+          cmake
+          cmake-language-server
+          gnumake
+          checkmake
+          gcc # c/c++ compiler, required by nvim-treesitter!
+          llvmPackages.clang-unwrapped # c/c++ tools with clang-tools such as clangd
+          gdb
+          lldb
 
-        #-- rust
-        rust-analyzer
-        cargo # rust package manager
-        rustfmt
+          #-- python
+          nodePackages.pyright # python language server
+          python3Packages.black # python formatter
+          python3Packages.ruff-lsp
+          (python3.withPackages (
+            ps:
+              with ps; [
+                pynvim # Python client and plugin host for Nvim
 
-        #-- zig
-        zls
+                ipython
+                pandas
+                requests
+                pyquery
+                pyyaml
+              ]
+          ))
 
-        #-- nix
-        nil
-        rnix-lsp
-        # nixd
-        statix # Lints and suggestions for the nix programming language
-        deadnix # Find and remove unused code in .nix source files
-        alejandra # Nix Code Formatter
+          #-- rust
+          rust-analyzer
+          cargo # rust package manager
+          rustfmt
 
-        #-- golang
-        go
-        gomodifytags
-        iferr # generate error handling code for go
-        impl # generate function implementation for go
-        gotools # contains tools like: godoc, goimports, etc.
-        gopls # go language server
-        delve # go debugger
+          #-- zig
+          zls
 
-        #-- lua
-        stylua
-        lua-language-server
+          #-- nix
+          nil
+          rnix-lsp
+          # nixd
+          statix # Lints and suggestions for the nix programming language
+          deadnix # Find and remove unused code in .nix source files
+          alejandra # Nix Code Formatter
 
-        #-- bash
-        nodePackages.bash-language-server
-        shellcheck
-        shfmt
+          #-- golang
+          go
+          gomodifytags
+          iferr # generate error handling code for go
+          impl # generate function implementation for go
+          gotools # contains tools like: godoc, goimports, etc.
+          gopls # go language server
+          delve # go debugger
 
-        #-- javascript/typescript --#
-        nodePackages.typescript
-        nodePackages.typescript-language-server
-        # HTML/CSS/JSON/ESLint language servers extracted from vscode
-        nodePackages.vscode-langservers-extracted
-        nodePackages."@tailwindcss/language-server"
+          # -- java
+          jdk17
+          gradle
+          maven
+          spring-boot-cli
 
-        #-- CloudNative
-        nodePackages.dockerfile-language-server-nodejs
-        terraform
-        terraform-ls
-        jsonnet
-        jsonnet-language-server
-        hadolint # Dockerfile linter
+          #-- lua
+          stylua
+          lua-language-server
 
-        #-- Others
-        taplo # TOML language server / formatter / validator
-        nodePackages.yaml-language-server
-        sqlfluff # SQL linter
-        actionlint # GitHub Actions linter
-        buf # protoc plugin for linting and formatting
-        proselint # English prose linter
+          #-- bash
+          nodePackages.bash-language-server
+          shellcheck
+          shfmt
 
-        #-- Misc
-        tree-sitter # common language parser/highlighter
-        nodePackages.prettier # common code formatter
-        marksman # language server for markdown
-        glow # markdown previewer
+          #-- javascript/typescript --#
+          nodePackages.nodejs
+          nodePackages.typescript
+          nodePackages.typescript-language-server
+          # HTML/CSS/JSON/ESLint language servers extracted from vscode
+          nodePackages.vscode-langservers-extracted
+          nodePackages."@tailwindcss/language-server"
 
-        #-- Optional Requirements:
-        gdu # disk usage analyzer, required by AstroNvim
-        ripgrep # fast search tool, required by AstroNvim's '<leader>fw'(<leader> is space key)
+          #-- CloudNative
+          nodePackages.dockerfile-language-server-nodejs
+          # terraform  # install via brew on macOS
+          terraform-ls
+          jsonnet
+          jsonnet-language-server
+          hadolint # Dockerfile linter
 
-        lazygit
-        curl
-      ]
-      ++ (
-        if pkgs.stdenv.isDarwin
-        then []
-        else [
-          #-- verilog / systemverilog
-          verible
+          #-- Others
+          taplo # TOML language server / formatter / validator
+          nodePackages.yaml-language-server
+          sqlfluff # SQL linter
+          actionlint # GitHub Actions linter
+          buf # protoc plugin for linting and formatting
+          proselint # English prose linter
+          guile # scheme language
+
+          #-- Misc
+          tree-sitter # common language parser/highlighter
+          nodePackages.prettier # common code formatter
+          marksman # language server for markdown
+          glow # markdown previewer
+          fzf
+
+          #-- Optional Requirements:
+          gdu # disk usage analyzer, required by AstroNvim
+          ripgrep # fast search tool, required by AstroNvim's '<leader>fw'(<leader> is space key)
         ]
-      );
+        ++ (
+          if pkgs.stdenv.isDarwin
+          then []
+          else [
+            #-- verilog / systemverilog
+            verible
+          ]
+        );
+    };
   };
 }
