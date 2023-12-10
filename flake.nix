@@ -27,9 +27,9 @@
     #-- Users' Configurations
     mondrian_1_modules = {
       nix-on-droid_modules = [
-        ./hosts/nix-on-droid/aarch64/pstar_1/nix-on-droid.nix
+        ./hosts/nix-on-droid/aarch64/mondrian_1/nix-on-droid.nix
       ];
-      home-manager_module = import home/nix-on-droid/aarch64/pstar_1/home.nix;
+      home-manager_module = import home/nix-on-droid/aarch64/mondrian_1/home.nix;
     };
 
     pstar_1_modules = {
