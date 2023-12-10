@@ -14,7 +14,7 @@
     # conda is not available for MacOS
     conda
 
-    busybox
+    # (lib.lowPrio busybox)
 
     # system call monitoring
     strace # system call monitoring
