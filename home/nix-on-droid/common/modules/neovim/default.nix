@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-unstable,
   astronvim,
   ...
 }:
@@ -38,7 +39,7 @@
       # ];
 
       # Extra packages only available to nvim(won't pollute the global home environment)
-      extraPackages = with pkgs;
+      extraPackages = with pkgs-unstable;
         [
           #-- c/c++
           cmake
