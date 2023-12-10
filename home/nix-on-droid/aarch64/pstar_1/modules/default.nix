@@ -10,6 +10,7 @@
     ./menu.nix
     ./dewm.nix
     ./browers.nix
+    ./virtualisation.nix
     ./system-tools.nix
     ./ENV_VAR.nix
     ../../../common/modules/x11_catppuccin.nix

@@ -14,6 +14,8 @@
     # conda is not available for MacOS
     conda
 
+    busybox
+
     # system call monitoring
     strace # system call monitoring
     ltrace # library call monitoring
@@ -44,6 +46,7 @@
     # networking tools
     mtr # A network diagnostic tool
     iperf3
+    iproute2
     dnsutils # `dig` + `nslookup`
     ldns # replacement of `dig`, it provide the command `drill`
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
