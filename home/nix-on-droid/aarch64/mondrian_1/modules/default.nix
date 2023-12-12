@@ -11,6 +11,7 @@
     ./dewm.nix
     ./browers.nix
     ./system-tools.nix
+    ./others.nix
     ./ENV_VAR.nix
     ../../../common/modules/x11_catppuccin.nix
     ../../../common/modules/neovim
