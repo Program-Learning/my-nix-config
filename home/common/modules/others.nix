@@ -3,12 +3,6 @@
   ...
 }: {
   home.packages = with pkgs; [
-  docker
-  podman
-  lxd
-  lxc
+    yutto
   ];
-
-  programs = {
-  };
 }
