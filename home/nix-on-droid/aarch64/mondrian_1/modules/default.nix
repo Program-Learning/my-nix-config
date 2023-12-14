@@ -20,5 +20,6 @@
     # common
     ../../../../common/modules/neovim
     ../../../../common/modules/others.nix
+    ../../../../common/modules/fhs.nix
   ];
 }
