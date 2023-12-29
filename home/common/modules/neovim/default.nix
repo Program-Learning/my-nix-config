@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgs-unstable,
   astronvim,
   ...
 }:
@@ -12,7 +11,10 @@
 {
   xdg.configFile = {
     # astronvim's config
-    "nvim".source = astronvim;
+    "nvim" = {
+      source = astronvim;
+      force = true;
+    };
 
     # my custom astronvim config, astronvim will load it after base config
     # https://github.com/AstroNvim/AstroNvim/blob/v3.32.0/lua/astronvim/bootstrap.lua#L15-L16
@@ -34,21 +36,28 @@
       vimAlias = true;
 
       # currently we use lazy.nvim as neovim's package manager, so comment this one.
-      # plugins = with pkgs.vimPlugins; [
-      #   # search all the plugins using https://search.nixos.org/packages
-      # ];
+      # Install packages that will compile locally or download FHS binaries via Nix!
+      # and use lazy.nvim's `dir` option to specify the package directory in nix store.
+      # so that these plugins can work on NixOS.
+      #
+      # related project:
+      #  https://github.com/b-src/lazy-nix-helper.nvim
+      plugins = with pkgs.vimPlugins; [
+        # search all the plugins using https://search.nixos.org/packages
+        telescope-fzf-native-nvim
+      ];
 
       # Extra packages only available to nvim(won't pollute the global home environment)
-      extraPackages = with pkgs-unstable;
+      extraPackages = with pkgs;
         [
           #-- c/c++
           cmake
           cmake-language-server
           gnumake
+          ccache
           checkmake
           gcc # c/c++ compiler, required by nvim-treesitter!
           llvmPackages.clang-unwrapped # c/c++ tools with clang-tools such as clangd
-          gdb
           lldb
 
           #-- python
@@ -65,6 +74,24 @@
                 requests
                 pyquery
                 pyyaml
+                pip # use in venv "python -m venv .venv" "source .venv/bin/activate"
+
+                ipykernel
+                jupyterlab
+                matplotlib
+                numpy
+                seaborn
+                networkx
+                beautifulsoup4
+                selenium
+                urllib3
+                pyclip
+                pybluez
+                pymysql
+                jieba
+                # wordcloud
+                pandas-datareader
+                pyperclip
               ]
           ))
 
@@ -131,7 +158,6 @@
           actionlint # GitHub Actions linter
           buf # protoc plugin for linting and formatting
           proselint # English prose linter
-          guile # scheme language
 
           #-- Misc
           tree-sitter # common language parser/highlighter
@@ -150,6 +176,7 @@
           else [
             #-- verilog / systemverilog
             verible
+            gdb
           ]
         );
     };

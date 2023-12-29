@@ -8,6 +8,10 @@ return {
       spell = false,      -- Spell checking
       swapfile = false,   -- Swapfile
       smartindent = false, -- fix https://github.com/ryan4yin/nix-config/issues/4
+      title = true,       -- Set the title of window to `filename [+=-] (path) - NVIM`
+      -- The percentage of 'columns' to use for the title
+      -- When the title is longer, only the end of the path name is shown.
+      titlelen = 20,
     },
   },
 
@@ -17,7 +21,7 @@ return {
     { import = "astrocommunity.colorscheme.catppuccin" },
     -- Highly experimental plugin that completely replaces
     -- the UI for messages, cmdline and the popupmenu.
-    { import = "astrocommunity.utility.noice-nvim" },
+    -- { import = "astrocommunity.utility.noice-nvim" },
     -- Fully featured & enhanced replacement for copilot.vim
     -- <Tab> work with both auto completion in cmp and copilot
     { import = "astrocommunity.media.vim-wakatime" },
@@ -38,25 +42,28 @@ return {
     { import = "astrocommunity.pack.json" },
     { import = "astrocommunity.pack.yaml" },
     { import = "astrocommunity.pack.toml" },
-    ---- Backend
+    ---- Backend / System
     { import = "astrocommunity.pack.lua" },
     { import = "astrocommunity.pack.go" },
     { import = "astrocommunity.pack.rust" },
     { import = "astrocommunity.pack.python" },
     { import = "astrocommunity.pack.java" },
+    { import = "astrocommunity.pack.cmake" },
+    { import = "astrocommunity.pack.cpp" },
     -- { import = "astrocommunity.pack.nix" },  -- manually add config for nix, comment this one.
     { import = "astrocommunity.pack.proto" },
     ---- Operation & Cloud Native
     { import = "astrocommunity.pack.terraform" },
     { import = "astrocommunity.pack.bash" },
-    { import = "astrocommunity.pack.cmake" },
-    { import = "astrocommunity.pack.cpp" },
     { import = "astrocommunity.pack.docker" },
+    { import = "astrocommunity.pack.helm" },
     -- Motion
     { import = "astrocommunity.motion.mini-surround" },
     -- https://github.com/echasnovski/mini.ai
     { import = "astrocommunity.motion.mini-ai" },
     { import = "astrocommunity.motion.flash-nvim" },
+    -- diable toggleterm.nvim, zellij's terminal is far better than neovim's one
+    { "akinsho/toggleterm.nvim",                                   enabled = false },
     { "folke/flash.nvim",                                          vscode = false },
     -- Lua implementation of CamelCaseMotion, with extra consideration of punctuation.
     { import = "astrocommunity.motion.nvim-spider" },
@@ -74,19 +81,20 @@ return {
     },
 
     {
-      "skyfireitdiy/codegeex-vim",
-    },
-
-    {
-      "neoclide/coc.nvim",
-    },
-
-    {
       "0x00-ketsu/autosave.nvim",
       -- lazy-loading on events
       event = { "InsertLeave", "TextChanged" },
       opts = function(_, opts)
-        opts.prompt_style = "notify" -- or stdout
+        opts.prompt_style = "stdout" -- notify or stdout
+      end,
+    },
+
+    -- Provide a comparable s-expression editing experience in Neovim to that provided by Emacs.
+    -- https://github.com/julienvincent/nvim-paredit
+    {
+      "julienvincent/nvim-paredit",
+      config = function()
+        require("nvim-paredit").setup()
       end,
     },
 
@@ -250,6 +258,13 @@ return {
           "regex",
           "terraform",
           "nix",
+          "csv",
+          -- other programming language
+          "diff",
+          "gitignore",
+          "gitcommit",
+          "latex",
+          "sql",
         })
       end,
     },
@@ -394,6 +409,17 @@ return {
         })
       end,
     },
+
+    -- The plugins required by Mayuri
+    -- AI prompt for programming
+    {
+      "skyfireitdiy/codegeex-vim",
+    },
+    -- Language Servers
+    {
+      "neoclide/coc.nvim",
+    },
+
   },
 
   -- Configure require("lazy").setup() options
