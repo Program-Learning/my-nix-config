@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-unstable,
   astronvim,
   ...
 }:
@@ -42,13 +43,13 @@
       #
       # related project:
       #  https://github.com/b-src/lazy-nix-helper.nvim
-      plugins = with pkgs.vimPlugins; [
+      plugins = with pkgs-unstable.vimPlugins; [
         # search all the plugins using https://search.nixos.org/packages
         telescope-fzf-native-nvim
       ];
 
       # Extra packages only available to nvim(won't pollute the global home environment)
-      extraPackages = with pkgs;
+      extraPackages = with pkgs-unstable;
         [
           #-- c/c++
           cmake
