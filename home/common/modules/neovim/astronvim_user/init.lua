@@ -17,8 +17,14 @@ return {
 
   plugins = {
     "AstroNvim/astrocommunity",
-    -- colorscheme - catppuccin
-    { import = "astrocommunity.colorscheme.catppuccin" },
+    -- Motion
+    { import = "astrocommunity.motion.mini-surround" },
+    -- https://github.com/echasnovski/mini.ai
+    { import = "astrocommunity.motion.mini-ai" },
+    { import = "astrocommunity.motion.flash-nvim" },
+    -- diable toggleterm.nvim, zellij's terminal is far better than neovim's one
+    { "akinsho/toggleterm.nvim",                                   enabled = false },
+    { "folke/flash.nvim",                                          vscode = false },
     -- Highly experimental plugin that completely replaces
     -- the UI for messages, cmdline and the popupmenu.
     -- { import = "astrocommunity.utility.noice-nvim" },
@@ -52,19 +58,144 @@ return {
     { import = "astrocommunity.pack.cpp" },
     -- { import = "astrocommunity.pack.nix" },  -- manually add config for nix, comment this one.
     { import = "astrocommunity.pack.proto" },
+
     ---- Operation & Cloud Native
     { import = "astrocommunity.pack.terraform" },
     { import = "astrocommunity.pack.bash" },
     { import = "astrocommunity.pack.docker" },
     { import = "astrocommunity.pack.helm" },
-    -- Motion
-    { import = "astrocommunity.motion.mini-surround" },
-    -- https://github.com/echasnovski/mini.ai
-    { import = "astrocommunity.motion.mini-ai" },
-    { import = "astrocommunity.motion.flash-nvim" },
-    -- diable toggleterm.nvim, zellij's terminal is far better than neovim's one
-    { "akinsho/toggleterm.nvim",                                   enabled = false },
-    { "folke/flash.nvim",                                          vscode = false },
+
+    -- colorscheme
+    { import = "astrocommunity.colorscheme.catppuccin" },
+    {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      opts = function(_, opts)
+        opts.flavour = "mocha"              -- latte, frappe, macchiato, mocha
+        opts.transparent_background = true -- setting the background color.
+      end,
+    },
+    -- Language Parser for syntax highlighting / indentation / folding / Incremental selection
+    {
+      "nvim-treesitter/nvim-treesitter",
+      opts = function(_, opts)
+        local utils = require("astronvim.utils")
+        opts.incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "<C-space>", -- Ctrl + Space
+            node_incremental = "<C-space>",
+            scope_incremental = "<A-space>", -- Alt + Space
+            node_decremental = "<bs>", -- Backspace
+          },
+        }
+        opts.ignore_install = { "gotmpl" }
+        opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, {
+          -- neovim
+          "vim",
+          "lua",
+          -- operation & cloud native
+          "dockerfile",
+          "hcl",
+          "jsonnet",
+          "regex",
+          "terraform",
+          "nix",
+          "csv",
+          -- other programming language
+          "diff",
+          "gitignore",
+          "gitcommit",
+          "latex",
+          "sql",
+          -- Lisp like
+          "fennel",
+          "clojure",
+          "commonlisp",
+          -- customized languages:
+          "scheme",
+        })
+
+        -- add support for scheme
+        local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+        parser_config.scheme = {
+          install_info = {
+            url = "https://github.com/6cdh/tree-sitter-scheme", -- local path or git repo
+            files = { "src/parser.c" },
+            -- optional entries:
+            branch = "main",                  -- default branch in case of git repo if different from master
+            generate_requires_npm = false,    -- if stand-alone parser without npm dependencies
+            requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+          },
+        }
+        -- use scheme parser for filetypes: scm
+        vim.treesitter.language.register("scheme", "scm")
+      end,
+    },
+    {
+      "eraserhd/parinfer-rust",
+      build = "cargo build --release",
+      ft = { "scm", "scheme" },
+    },
+    { "Olical/nfnl",                                       ft = "fennel" },
+    {
+      "Olical/conjure",
+      ft = { "clojure", "fennel", "python", "scheme" }, -- etc
+      -- [Optional] cmp-conjure for cmp
+      dependencies = {
+        {
+          "PaterJason/cmp-conjure",
+          config = function()
+            local cmp = require("cmp")
+            local config = cmp.get_config()
+            table.insert(config.sources, {
+              name = "buffer",
+              option = {
+                sources = {
+                  { name = "conjure" },
+                },
+              },
+            })
+            cmp.setup(config)
+          end,
+        },
+      },
+      config = function(_, opts)
+        require("conjure.main").main()
+        require("conjure.mapping")["on-filetype"]()
+      end,
+      init = function()
+        -- Set configuration options here
+        vim.g["conjure#debug"] = true
+      end,
+    },
+    {
+      "nvim-orgmode/orgmode",
+      dependencies = {
+        { "nvim-treesitter/nvim-treesitter", lazy = true },
+      },
+      event = "VeryLazy",
+      config = function()
+        -- Load treesitter grammar for org
+        require("orgmode").setup_ts_grammar()
+
+        -- Setup treesitter
+        require("nvim-treesitter.configs").setup({
+          highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = { "org" },
+          },
+          ensure_installed = { "org" },
+        })
+
+        -- Setup orgmode
+        require("orgmode").setup({
+          org_agenda_files = "~/org/**/*",
+          org_default_notes_file = "~/org/refile.org",
+        })
+      end,
+    },
+
     -- Lua implementation of CamelCaseMotion, with extra consideration of punctuation.
     { import = "astrocommunity.motion.nvim-spider" },
     -- AI Assistant
@@ -86,15 +217,6 @@ return {
       event = { "InsertLeave", "TextChanged" },
       opts = function(_, opts)
         opts.prompt_style = "stdout" -- notify or stdout
-      end,
-    },
-
-    -- Provide a comparable s-expression editing experience in Neovim to that provided by Emacs.
-    -- https://github.com/julienvincent/nvim-paredit
-    {
-      "julienvincent/nvim-paredit",
-      config = function()
-        require("nvim-paredit").setup()
       end,
     },
 
@@ -230,45 +352,8 @@ return {
 
     -- full signature help, docs and completion for the nvim lua API.
     { "folke/neodev.nvim",     opts = {} },
-
+    -- automatically highlighting other uses of the word under the cursor using either LSP, Tree-sitter, or regex matching.
     { "RRethy/vim-illuminate", config = function() end },
-
-    -- Language Parser for syntax highlighting / indentation / folding / Incremental selection
-    {
-      "nvim-treesitter/nvim-treesitter",
-      opts = function(_, opts)
-        local utils = require("astronvim.utils")
-        opts.incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>", -- Ctrl + Space
-            node_incremental = "<C-space>",
-            scope_incremental = "<A-space>", -- Alt + Space
-            node_decremental = "<bs>", -- Backspace
-          },
-        }
-        opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, {
-          -- neovim
-          "vim",
-          "lua",
-          -- operation & cloud native
-          "dockerfile",
-          "hcl",
-          "jsonnet",
-          "regex",
-          "terraform",
-          "nix",
-          "csv",
-          -- other programming language
-          "diff",
-          "gitignore",
-          "gitcommit",
-          "latex",
-          "sql",
-        })
-      end,
-    },
-
     -- implementation/definition preview
     {
       "rmagatti/goto-preview",
@@ -284,22 +369,34 @@ return {
     -- LSP installations
     {
       "williamboman/mason-lspconfig.nvim",
-      -- overwrite ensure_installed to install lsp via home manager(except emmet_ls)
-      opts = function(_, opts)
-        opts.ensure_installed = {
-          "emmet_ls", -- not exist in nixpkgs, so install it via mason
-        }
-      end,
-    },
-    -- Formatters/Linter installation
-    {
-      "jay-babu/mason-null-ls.nvim",
+      -- mason is unusable on NixOS, disable it.
       -- ensure_installed nothing
       opts = function(_, opts)
         opts.ensure_installed = nil
         opts.automatic_installation = false
       end,
     },
+    -- Formatters/Linter installation
+    {
+      "jay-babu/mason-null-ls.nvim",
+      -- mason is unusable on NixOS, disable it.
+      -- ensure_installed nothing
+      opts = function(_, opts)
+        opts.ensure_installed = nil
+        opts.automatic_installation = false
+      end,
+    },
+    -- Debugger installation
+    {
+      "jay-babu/mason-nvim-dap.nvim",
+      -- mason is unusable on NixOS, disable it.
+      -- ensure_installed nothing
+      opts = function(_, opts)
+        opts.ensure_installed = nil
+        opts.automatic_installation = false
+      end,
+    },
+
     {
       "jose-elias-alvarez/null-ls.nvim",
       opts = function(_, opts)
@@ -329,33 +426,26 @@ return {
             diagnostics.deadnix, -- Scan Nix files for dead code.
 
             -- Formatting
-            formatting.prettier,                          -- js/ts/vue/css/html/json/... formatter
-            diagnostics.hadolint,                         -- Dockerfile linter
-            formatting.black,                             -- Python formatter
-            formatting.ruff,                              -- extremely fast Python linter
-            formatting.goimports,                         -- Go formatter
-            formatting.shfmt,                             -- Shell formatter
-            formatting.rustfmt,                           -- Rust formatter
-            formatting.taplo,                             -- TOML formatteautoindentr
-            formatting.terraform_fmt,                     -- Terraform formatter
-            formatting.stylua,                            -- Lua formatter
-            formatting.alejandra,                         -- Nix formatter
-            formatting.sqlfluff.with({                    -- SQL formatter
-              extra_args = { "--dialect", "postgres" },   -- change to your dialect
+            formatting.prettier,                 -- js/ts/vue/css/html/json/... formatter
+            diagnostics.hadolint,                -- Dockerfile linter
+            formatting.black,                    -- Python formatter
+            formatting.ruff,                     -- extremely fast Python linter
+            formatting.goimports,                -- Go formatter
+            formatting.shfmt,                    -- Shell formatter
+            formatting.rustfmt,                  -- Rust formatter
+            formatting.taplo,                    -- TOML formatteautoindentr
+            formatting.terraform_fmt,            -- Terraform formatter
+            formatting.stylua,                   -- Lua formatter
+            formatting.alejandra,                -- Nix formatter
+            formatting.sqlfluff.with({           -- SQL formatter
+              extra_args = { "--dialect", "postgres" }, -- change to your dialect
             }),
-            formatting.nginx_beautifier,                  -- Nginx formatter
-            null_ls.builtins.formatting.verible_verilog_format, -- Verilog formatter
+            formatting.nginx_beautifier,         -- Nginx formatter
+            formatting.verible_verilog_format,   -- Verilog formatter
+            formatting.emacs_scheme_mode,        -- using emacs in batch mode to format scheme files.
+            formatting.fnlfmt,                   -- Format Fennel code
           })
         end
-      end,
-    },
-    -- Debugger installation
-    {
-      "jay-babu/mason-nvim-dap.nvim",
-      -- overrides `require("mason-nvim-dap").setup(...)`
-      opts = function(_, opts)
-        opts.ensure_installed = nil
-        opts.automatic_installation = false
       end,
     },
 
@@ -443,40 +533,46 @@ return {
           offsetEncoding = "utf-8",
         },
       },
+      scheme_langserver = {
+        filetypes = { "scheme", "scm" },
+        single_file_support = true,
+      },
     },
     -- enable servers that installed by home-manager instead of mason
     servers = {
       ---- Frontend & NodeJS
-      "tsserver",   -- typescript/javascript language server
-      "tailwindcss", -- tailwindcss language server
-      "html",       -- html language server
-      "cssls",      -- css language server
-      "prismals",   -- prisma language server
-      "volar",      -- vue language server
+      "tsserver",       -- typescript/javascript language server
+      "tailwindcss",    -- tailwindcss language server
+      "html",           -- html language server
+      "cssls",          -- css language server
+      "prismals",       -- prisma language server
+      "volar",          -- vue language server
       ---- Configuration Language
-      "marksman",   -- markdown ls
-      "jsonls",     -- json language server
-      "yamlls",     -- yaml language server
-      "taplo",      -- toml language server
+      "marksman",       -- markdown ls
+      "jsonls",         -- json language server
+      "yamlls",         -- yaml language server
+      "taplo",          -- toml language server
       ---- Backend
-      "lua_ls",     -- lua
-      "gopls",      -- go
-      "rust_analyzer", -- rust
-      "pyright",    -- python
-      "ruff_lsp",   -- extremely fast Python linter and code transformation
-      "jdtls",      -- java
-      "nil_ls",     -- nix language server
-      "bufls",      -- protocol buffer language server
-      "zls",        -- zig language server
+      "lua_ls",         -- lua
+      "gopls",          -- go
+      "rust_analyzer",  -- rust
+      "pyright",        -- python
+      "ruff_lsp",       -- extremely fast Python linter and code transformation
+      "jdtls",          -- java
+      "nil_ls",         -- nix language server
+      "bufls",          -- protocol buffer language server
+      "zls",            -- zig language server
       ---- HDL
-      "verible",    -- verilog language server
+      "verible",        -- verilog language server
       ---- Operation & Cloud Nativautoindente
-      "bashls",     -- bash
-      "cmake",      -- cmake language server
-      "clangd",     -- c/c++
-      "dockerls",   -- dockerfile
-      "jsonnet_ls", -- jsonnet language server
-      "terraformls", -- terraform hcl
+      "bashls",         -- bash
+      "cmake",          -- cmake language server
+      "clangd",         -- c/c++
+      "dockerls",       -- dockerfile
+      "jsonnet_ls",     -- jsonnet language server
+      "terraformls",    -- terraform hcl
+      "nushell",        -- nushell language server
+      "scheme_langserver", -- scheme language server
     },
     formatting = {
       disabled = {},
@@ -487,6 +583,7 @@ return {
           "jsonnet",
           "rust",
           "terraform",
+          "nu",
         },
       },
     },
