@@ -11,10 +11,10 @@
 ############################################################################
 
 mondrian_1:
-	NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#mondrian_1
+	NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#mondrian_1
 
 pstar_1:
-	NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#pstar_1
+	NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#pstar_1
 
 nix-on-droid_x11:
 	nix-shell ~/my-nix-config/scripts/x11_catppuccin.nix --run "myx :10"

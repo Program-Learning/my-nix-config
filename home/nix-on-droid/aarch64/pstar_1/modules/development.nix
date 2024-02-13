@@ -66,6 +66,7 @@ in {
     gnumake
 
     # Some common stuff that people expect to have
+    fzf
     diffutils
     findutils
     utillinux
