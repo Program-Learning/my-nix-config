@@ -1,8 +1,9 @@
 {
   pkgs,
+  pkgs-unstable,
   ...
 }: {
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     dmenu
     #rofi
   ];
@@ -11,6 +12,5 @@
     rofi = {
       enable = true;
     };
-
   };
 }

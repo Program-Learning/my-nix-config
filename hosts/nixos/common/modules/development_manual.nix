@@ -1,10 +1,11 @@
 {
   pkgs,
+  pkgs-unstable,
   ...
 }: {
-  environment.systemPackages = [
-    pkgs.man-pages
-    pkgs.man-pages-posix
+  environment.systemPackages = with pkgs-unstable; [
+    man-pages
+    man-pages-posix
   ];
   documentation.dev.enable = true;
 }

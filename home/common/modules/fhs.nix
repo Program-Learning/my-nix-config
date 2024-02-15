@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # create a fhs environment by command `fhs`, so we can run non-nixos packages in nixos!
     (

@@ -11,7 +11,7 @@ with import <nixpkgs> {}; let
     mkdir -p $out
     gcc -std=c99 -shared -fPIC ${id_c} -o $out/id.so
   '';
-  catppuccin-urxvt = fetchTarball("https://github.com/catppuccin/urxvt/archive/master.tar.gz");
+  catppuccin-urxvt = fetchTarball "https://github.com/catppuccin/urxvt/archive/master.tar.gz";
 
   myx = writeShellScriptBin "myx" ''
     export DISPLAY=$1 #TODO dynamic?

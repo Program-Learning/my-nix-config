@@ -9,6 +9,15 @@
     nixpkgs-unstable,
     ...
   }: let
+    systems = [
+      "x86_64-linux"
+      "i686-linux"
+      "x86_64-darwin"
+      "aarch64-linux"
+      "armv6l-linux"
+      "armv7l-linux"
+    ];
+    forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
     make_nix-on-droid = import ./lib/nix-on-droid.nix;
 
     aarch64-nix-on-droid_specialArgs =
@@ -39,6 +48,10 @@
       home-manager_module = import home/nix-on-droid/aarch64/pstar_1/home.nix;
     };
   in {
+    formatter = forAllSystems (
+      system: nixpkgs.legacyPackages.${system}.alejandra
+    );
+
     nixOnDroidConfigurations.mondrian_1 = make_nix-on-droid (aarch64-nix-on-droid_base_args // mondrian_1_modules);
     nixOnDroidConfigurations.pstar_1 = make_nix-on-droid (aarch64-nix-on-droid_base_args // pstar_1_modules);
   };

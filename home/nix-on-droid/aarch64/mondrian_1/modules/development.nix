@@ -1,8 +1,9 @@
 {
   pkgs,
+  pkgs-unstable,
   ...
 }: let
-  my_python = pkgs.python311.withPackages (ps:
+  my_python = pkgs-unstable.python311.withPackages (ps:
     with ps; [
       ipykernel
       #jupyterlab
@@ -27,16 +28,14 @@
       pyquery
       pyyaml
 
-      
       #docx2pdf
     ]);
 in {
-  home.packages = with pkgs; [
-    
-        #-- python
-    my_python
+  home.packages = with pkgs-unstable; [
+    #-- python
+    # my_python
 
-        #-- golang
+    #-- golang
     go
     gomodifytags
     iferr # generate error handling code for go
@@ -45,9 +44,8 @@ in {
     gopls # go language server
     delve # go debugger
 
-        #-- jdk
+    #-- jdk
     jdk17 # used to run some java based tools(.jar)
-
 
     rsync # File Copy/Snyc
     ranger # Terminal FileManager
@@ -72,8 +70,6 @@ in {
     utillinux
     tzdata
     hostname
-    man
-    gnugrep
     gnupg
     gnused
     gnutar

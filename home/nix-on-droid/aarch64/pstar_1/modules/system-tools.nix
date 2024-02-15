@@ -1,6 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
   # Linux Only Packages, not available on Darwin
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     nmon
     iotop
     iftop
@@ -20,7 +24,7 @@
     strace # system call monitoring
     ltrace # library call monitoring
     bpftrace # powerful tracing tool
-    tcpdump  # network sniffer
+    tcpdump # network sniffer
     lsof # list open files
 
     # system tools
@@ -31,8 +35,6 @@
     #usbutils # lsusb
     hdparm # for disk performance, command
     #dmidecode # a tool that reads information about your system's hardware from the BIOS according to the SMBIOS/DMI standard
-
-
 
     neofetch
     ranger # terminal file manager(batteries included, with image preview support)
@@ -54,15 +56,14 @@
     nmap # A utility for network discovery and security auditing
     ipcalc # it is a calculator for the IPv4/v6 addresses
 
-
     # Text Processing
     # Docs: https://github.com/learnbyexample/Command-line-text-processing
-    gnugrep  # GNU grep, provides `grep`/`egrep`/`fgrep`
-    gnused  # GNU sed, very powerful(mainly for replacing text in files)
-    gawk   # GNU awk, a pattern scanning and processing language
-    ripgrep # recursively searches directories for a regex pattern
-    sad  # CLI search and replace, with diff preview, really useful!!!
-    delta  # A viewer for git and diff output
+    gnugrep # GNU grep, provides `grep`/`egrep`/`fgrep`
+    gnused # GNU sed, very powerful(mainly for replacing text in files)
+    gawk # GNU awk, a pattern scanning and processing language
+    (ripgrep.override {withPCRE2 = true;}) # recursively searches directories for a regex pattern
+    sad # CLI search and replace, with diff preview, really useful!!!
+    delta # A viewer for git and diff output
     # A fast and polyglot tool for code searching, linting, rewriting at large scale
     # supported languages: only some mainstream languages currently(do not support nix/nginx/yaml/toml/...)
     ast-grep

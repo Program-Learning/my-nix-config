@@ -1,13 +1,13 @@
 {
   pkgs,
+  pkgs-unstable,
   config,
   ...
 }: {
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     # ...various
     # dejavu_fonts
     # powerline-fonts
-
 
     # icon fonts
     #material-design-icons

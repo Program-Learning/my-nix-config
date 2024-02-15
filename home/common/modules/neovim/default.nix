@@ -14,6 +14,7 @@ let
     vdiff = "nvim -d";
   };
 in {
+  imports = [./packages];
   xdg.configFile = {
     # astronvim's config
     "nvim" = {
