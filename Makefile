@@ -13,6 +13,9 @@
 mondrian_1:
 	NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#mondrian_1
 
+fily_pad_f12_1:
+	NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#fily_pad_f12_1
+
 pstar_1:
 	NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNFREE=1 nix-on-droid switch --flake ~/my-nix-config#pstar_1
 

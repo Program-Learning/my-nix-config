@@ -62,7 +62,7 @@
     nixOnDroidConfigurations = {
       mondrian_1 = make_nix-on-droid (aarch64-nix-on-droid_base_args // mondrian_1_modules);
       pstar_1 = make_nix-on-droid (aarch64-nix-on-droid_base_args // pstar_1_modules);
-      fily_pad_f11_1 = make_nix-on-droid (aarch64-nix-on-droid_base_args // fily_pad_f11_1_modules);
+      fily_pad_f12_1 = make_nix-on-droid (aarch64-nix-on-droid_base_args // fily_pad_f12_1_modules);
     };
   };
 
