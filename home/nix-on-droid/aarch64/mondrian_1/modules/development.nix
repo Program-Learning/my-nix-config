@@ -65,6 +65,7 @@ in {
 
     # Some common stuff that people expect to have
     fzf
+    killall
     diffutils
     findutils
     utillinux

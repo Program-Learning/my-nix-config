@@ -14,6 +14,8 @@
     nano
 
     # Some common stuff that people expect to have
+    #procps
+    #killall
     #diffutils
     #findutils
     #utillinux
@@ -35,7 +37,7 @@
   environment.etcBackupExtension = ".bak";
 
   # Read the changelog before changing this value
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 
   # Set up nix for flakes
   nix.extraOptions = ''
