@@ -1,4 +1,4 @@
-# My nix configurations
+# My nix configurations(deprecated)(move to nix-config)
 
 - This is my Nix configuration file. The goal is to unify the configurations of all devices (Darwin/NixOS/Linux/Nix-on-Droid) and organize them uniformly in a single repository using Nix.
 
