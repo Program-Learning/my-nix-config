@@ -47,6 +47,6 @@
   # Set your time zone
   #time.timeZone = "Europe/Berlin";
 
-  # user.shell = "${pkgs.fish}/bin/fish";
+  user.shell = "${pkgs.fish}/bin/fish";
   # networking.hostName = "mondrian_1";
 }
